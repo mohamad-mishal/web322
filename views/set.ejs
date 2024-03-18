@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego Set Details</title>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+    <% include('partials/navbar', {page: ''}) %>
+
+    <div class="container mx-auto py-8">
+        <div class="hero">
+            <h1 class="text-4xl"><%= set.name %></h1>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 mt-8">
+            <div>
+                <img src="<%= set.img_url %>" alt="<%= set.name %>" class="rounded-full mx-auto" style="max-width: 300px;">
+            </div>
+            <div>
+                <p class="text-lg">Name: <%= set.name %></p>
+                <p class="text-lg">Year Released: <%= set.year %></p>
+                <p class="text-lg">Theme: <%= set.theme %></p>
+                <p class="text-lg">Number of Parts: <%= set.num_parts %></p>
+                <blockquote class="text-lg" id="quote"></blockquote>
+                <a href="#" onclick="history.back(); return false;" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("https://quotable.io/random")
+                .then(response => response.json())
+                .then(data => {
+                    const quoteElement = document.getElementById("quote");
+                    quoteElement.textContent = `"${data.content}" - ${data.author}`;
+                })
+                .catch(error => console.error("Error fetching quote:", error));
+        });
+    </script>
+</body>
+</html>
